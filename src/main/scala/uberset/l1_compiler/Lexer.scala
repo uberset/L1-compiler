@@ -12,6 +12,7 @@ abstract sealed class Token
 case class EOF() extends Token
 case class Unknown(c: Char) extends Token
 case class IntLiteral(v: String) extends Token
+case class Identifier(v: String) extends Token
 
 class Lexer(
     val in: BufferedReader
@@ -28,15 +29,24 @@ class Lexer(
     }
 
     def getToken(): Token = {
+        while(char.isWhitespace) nextChar()
         if(char==0) EOF()
         else if(char.isDigit) {
-            var s = ""+char
+            var s = "" + char
             nextChar()
-            while(char.isDigit) {
+            while (char.isDigit) {
                 s = s + char
                 nextChar()
             }
             IntLiteral(s)
+        } else if(char.isLetter) {
+            var s = "" + char
+            nextChar()
+            while (char.isLetter || char.isDigit) {
+                s = s + char
+                nextChar()
+            }
+            Identifier(s)
         } else {
             val t = Unknown(char)
             nextChar()

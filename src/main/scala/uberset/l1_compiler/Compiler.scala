@@ -24,11 +24,23 @@ class Compiler(
 
     def program() {
         generator.begin()
-        expression()
+        statement()
         if(token!=EOF()) fail(s"Unexpected token: $token at end of program")
-        generator.printInt()
         generator.end()
         generator.library()
+    }
+
+    def statement() {
+        token match {
+            case Identifier("print") => stmPrint()
+            case other => fail(s"Expecting print statement. Found token: $other")
+        }
+    }
+
+    def stmPrint() {
+        nextToken()
+        intLiteral()
+        generator.printInt()
     }
 
     def expression() {
