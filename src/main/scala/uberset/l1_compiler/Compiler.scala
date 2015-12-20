@@ -6,8 +6,6 @@
 
 package uberset.l1_compiler
 
-import java.io.{BufferedReader, StringReader}
-
 class Compiler(
     val lexer: Lexer,
     val generator: Generator
