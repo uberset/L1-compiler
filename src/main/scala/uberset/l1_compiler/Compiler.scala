@@ -27,6 +27,7 @@ class Compiler(
     def program() {
         generator.begin()
         expression()
+        if(token!=EOF()) fail(s"Unexpected token: $token at end of program")
         generator.printInt()
         generator.end()
         generator.library()
@@ -39,7 +40,7 @@ class Compiler(
     def intLiteral(): Type = {
         token match {
             case IntLiteral(v) => generator.pushInt(v); nextToken(); Int()
-            case other => fail(s"Expecting integer literal. Found: ${other}")
+            case other => fail(s"Expecting integer literal. Found token: $other")
         }
     }
 

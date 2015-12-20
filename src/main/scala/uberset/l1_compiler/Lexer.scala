@@ -8,6 +8,11 @@ package uberset.l1_compiler
 
 import java.io.BufferedReader
 
+abstract sealed class Token
+case class EOF() extends Token
+case class Unknown(c: Char) extends Token
+case class IntLiteral(v: String) extends Token
+
 class Lexer(
     val in: BufferedReader
 ) {
@@ -17,9 +22,9 @@ class Lexer(
 
     def nextChar(): Unit = {
         val i = in.read()
-        //char =
-            if(i<0) char = 0   // EOF
-            else char = i.toChar
+        char =
+            if(i<0) 0       // EOF
+            else i.toChar   // character
     }
 
     def getToken(): Token = {
@@ -33,14 +38,10 @@ class Lexer(
             }
             IntLiteral(s)
         } else {
+            val t = Unknown(char)
             nextChar()
-            Unknown(char)
+            t
         }
     }
 
 }
-
-abstract sealed class Token
-case class EOF() extends Token
-case class Unknown(c: Char) extends Token
-case class IntLiteral(v: String) extends Token

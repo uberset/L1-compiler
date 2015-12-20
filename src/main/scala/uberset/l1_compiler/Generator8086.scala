@@ -27,7 +27,7 @@ class Generator8086(
     }
 
     override def pushInt(v: String) {
-        val i = v.toInt // 0..65535
+        val i = v.toInt // shall be in 0..65535
         out.println( "push ax")
         out.println(s"mov ax, $i")
     }
