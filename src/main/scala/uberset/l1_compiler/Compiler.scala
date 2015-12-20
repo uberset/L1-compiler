@@ -39,17 +39,22 @@ class Compiler(
 
     def stmPrint() {
         nextToken()
-        intLiteral()
-        generator.printInt()
+        val t = expression()
+        t match {
+            case TInt() => generator.printInt()
+            case TStr() => generator.printStr()
+            case other => fail(s"Unknown argument type $t for function print.")
+        }
     }
 
-    def expression() {
-        intLiteral()
+    def expression(): Type = {
+        literal()
     }
 
-    def intLiteral(): Type = {
+    def literal(): Type = {
         token match {
-            case IntLiteral(v) => generator.pushInt(v); nextToken(); Int()
+            case IntLiteral(v) => generator.pushInt(v); nextToken(); TInt()
+            case StrLiteral(v) => generator.pushStr(v); nextToken(); TStr()
             case other => fail(s"Expecting integer literal. Found token: $other")
         }
     }
@@ -61,4 +66,5 @@ class Compiler(
 }
 
 abstract sealed class Type
-case class Int() extends Type
+case class TInt() extends Type
+case class TStr() extends Type

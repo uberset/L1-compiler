@@ -15,4 +15,7 @@ trait Generator {
     def pushInt(v: String): Unit
     def printInt(): Unit
 
+    def pushStr(v: String): Unit
+    def printStr(): Unit
+
 }

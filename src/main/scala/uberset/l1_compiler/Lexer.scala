@@ -13,6 +13,7 @@ case class EOF() extends Token
 case class Unknown(c: Char) extends Token
 case class IntLiteral(v: String) extends Token
 case class Identifier(v: String) extends Token
+case class StrLiteral(v: String) extends Token
 
 class Lexer(
     val in: BufferedReader
@@ -31,7 +32,16 @@ class Lexer(
     def getToken(): Token = {
         while(char.isWhitespace) nextChar()
         if(char==0) EOF()
-        else if(char.isDigit) {
+        else if(char=='\"') {
+            var s = ""
+            nextChar()
+            while (char!=0 && char!='\"' && char!=10 && char!=13) {
+                s = s + char
+                nextChar()
+            }
+            nextChar()
+            StrLiteral(s)
+        } else if(char.isDigit) {
             var s = "" + char
             nextChar()
             while (char.isDigit) {

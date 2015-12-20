@@ -12,6 +12,8 @@ class Generator8086(
     val out: PrintWriter
 ) extends Generator {
 
+    var dataCount: Int = 0
+
     override def begin() {
         out.println("org 100h")
         out.println("mov ax, -1")
@@ -34,6 +36,22 @@ class Generator8086(
 
     override def printInt() {
         out.println("call printi")
+    }
+
+    override def pushStr(str: String) {
+        val nr = dataCount; dataCount += 1
+        val lbl = s"DATA_$nr"
+        val size = str.length
+        out.println(   "section .data")
+        out.println(  s"dw $size")
+        out.println(s"""$lbl: db "$str"""")
+        out.println(   "section .text")
+        out.println(   "push ax")
+        out.println(  s"mov ax, $lbl")
+    }
+
+    override def printStr() {
+        out.println("call prints")
     }
 
 }
