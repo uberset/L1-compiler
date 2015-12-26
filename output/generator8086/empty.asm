@@ -3,12 +3,24 @@ mov ax, -1
 mov ax,0x4c00
 int 0x21
 
+printb: ; (AX)->()
+        ; print a boolean to stdout
+        call boo2str
+        call prints
+        ret
+        
 printc:	; (AL)->()
         ; print a char to stdout
         mov dl, al      ; load character
         mov ah, 2		; output char to stdout (ah: 02, dl: char)
         int 0x21		; DOS
 .end:	ret
+
+printi: ; (AX)->()
+        ; print a signed integer (16 bit) to stdout
+        call int2decimal
+        call prints
+        ret
 
 prints:	; (AX)->()
         ; print a string to stdout
@@ -26,12 +38,6 @@ prints:	; (AX)->()
         inc bx
         loop .loop
 .end:	ret
-
-printi: ; (AX)->()
-        ; print a signed integer (16 bit) to stdout
-        call int2decimal
-        call prints
-        ret
 
 int2decimal:
         ; (AX)->(AX)
@@ -73,3 +79,21 @@ section .data
 .buffer	db		"-", "12345"
 .endbuf:
 section .text
+
+boo2str:
+        ; (AX)->(AX)
+        ; convert a boolean to a string
+        cmp ax, 0
+        je .false
+        mov ax, true
+        ret
+.false: mov ax, false
+        ret
+
+section .data
+        dw      4 ; size
+true:	db		"true"
+        dw      5 ; size
+false:	db		"false"
+section .text
+
