@@ -11,7 +11,7 @@ printb: ; (AX)->()
         call boo2str
         call prints
         ret
-        
+
 printc:	; (AL)->()
         ; print a char to stdout
         mov dl, al      ; load character
