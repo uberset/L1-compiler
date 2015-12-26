@@ -21,7 +21,8 @@ object TestCompiler {
             test("hello"),
             test("char"),
             test("empty"),
-            test("boolean")
+            test("boolean"),
+            test("negInt")
         )
         val tests = results.size
         val passed = results.filter(identity).size

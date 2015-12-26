@@ -33,7 +33,8 @@ class Compiler(
 
     def statement() {
         token match {
-            case Identifier("print") => stmPrint()
+            case Identifier("print")   => stmPrint()
+            case Identifier("println") => generator.printLn(); nextToken()
             case other => fail(s"Expecting print statement. Found token: $other")
         }
     }
@@ -51,7 +52,22 @@ class Compiler(
     }
 
     def expression(): Type = {
-        literal()
+        factor()
+    }
+
+    def factor(): Type = {
+        if(token==Operator('-')) {
+            nextToken()
+            val t = factor()
+            if(t==TInt()) {
+                generator.negI()
+                t
+            } else {
+                fail("Type TInt() expected. Found: $t")
+            }
+        } else {
+            literal()
+        }
     }
 
     def literal(): Type = {

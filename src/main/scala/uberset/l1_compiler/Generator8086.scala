@@ -28,6 +28,10 @@ class Generator8086(
         Library8086.library(out)
     }
 
+    override def printLn() {
+        out.println("call println")
+    }
+
     override def pushBoo(v: Boolean) {
         val i = if(v) 1 else 0
         out.println( "push ax")
@@ -68,6 +72,11 @@ class Generator8086(
         out.println(   "section .text")
         out.println(   "push ax")
         out.println(  s"mov ax, $lbl")
+    }
+
+    override def negI(): Unit = {
+        // ( a -> - a )
+        out.println("neg ax")
     }
 
     override def printStr() {

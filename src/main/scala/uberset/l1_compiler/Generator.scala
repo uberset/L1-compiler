@@ -12,6 +12,8 @@ trait Generator {
     def begin(): Unit
     def library(): Unit
 
+    def printLn(): Unit
+
     def pushBoo(v: Boolean): Unit
     def printBoo(): Unit
 
@@ -23,5 +25,7 @@ trait Generator {
 
     def pushStr(v: String): Unit
     def printStr(): Unit
+
+    def negI(): Unit
 
 }

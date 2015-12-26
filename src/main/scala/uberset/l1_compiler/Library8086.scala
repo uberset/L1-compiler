@@ -15,7 +15,7 @@ object Library8086 {
         out.append(printc)
         out.append(printi)
         out.append(prints)
-        //out.append(println)
+        out.append(println)
         out.append(int2decimal)
         out.append(boo2str)
         //out.append(inputc)
