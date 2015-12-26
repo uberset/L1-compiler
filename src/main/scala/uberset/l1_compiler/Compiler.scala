@@ -42,6 +42,7 @@ class Compiler(
         nextToken()
         val t = expression()
         t match {
+            case TBoo() => generator.printBoo()
             case TChr() => generator.printChr()
             case TInt() => generator.printInt()
             case TStr() => generator.printStr()
@@ -55,6 +56,8 @@ class Compiler(
 
     def literal(): Type = {
         token match {
+            case Identifier("true")  => generator.pushBoo(true ); nextToken(); TBoo()
+            case Identifier("false") => generator.pushBoo(false); nextToken(); TBoo()
             case ChrLiteral(v) => generator.pushChr(v); nextToken(); TChr()
             case IntLiteral(v) => generator.pushInt(v); nextToken(); TInt()
             case StrLiteral(v) => generator.pushStr(v); nextToken(); TStr()
@@ -69,6 +72,7 @@ class Compiler(
 }
 
 abstract sealed class Type
+case class TBoo() extends Type
+case class TChr() extends Type
 case class TInt() extends Type
 case class TStr() extends Type
-case class TChr() extends Type

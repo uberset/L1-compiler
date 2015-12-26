@@ -28,6 +28,16 @@ class Generator8086(
         Library8086.library(out)
     }
 
+    override def pushBoo(v: Boolean) {
+        val i = if(v) 1 else 0
+        out.println( "push ax")
+        out.println(s"mov ax, $i")
+    }
+
+    override def printBoo() {
+        out.println("call printb")
+    }
+
     override def pushChr(v: Char) {
         val s = v.toShort // shall be in 0..255
         out.println( "push ax")

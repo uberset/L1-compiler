@@ -20,7 +20,8 @@ object TestCompiler {
             test("int65536"),
             test("hello"),
             test("char"),
-            test("empty")
+            test("empty"),
+            test("boolean")
         )
         val tests = results.size
         val passed = results.filter(identity).size

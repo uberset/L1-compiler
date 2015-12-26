@@ -12,6 +12,9 @@ trait Generator {
     def begin(): Unit
     def library(): Unit
 
+    def pushBoo(v: Boolean): Unit
+    def printBoo(): Unit
+
     def pushChr(v: Char): Unit
     def printChr(): Unit
 

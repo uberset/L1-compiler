@@ -11,11 +11,13 @@ import java.io.PrintWriter
 object Library8086 {
 
     def library(out: PrintWriter): Unit = {
+        out.append(printb)
         out.append(printc)
+        out.append(printi)
         out.append(prints)
         //out.append(println)
-        out.append(printi)
         out.append(int2decimal)
+        out.append(boo2str)
         //out.append(inputc)
         //out.append(inputs)
         //out.append(inputi)
@@ -88,6 +90,15 @@ println:; ()->()
 .line:	db 0x0D, 0x0A
 """
 
+    val printb =
+"""
+printb: ; (AX)->()
+        ; print a boolean to stdout
+        call boo2str
+        call prints
+        ret
+"""
+
     val printi =
 """
 printi: ; (AX)->()
@@ -95,6 +106,27 @@ printi: ; (AX)->()
         call int2decimal
         call prints
         ret
+"""
+
+    val boo2str =
+"""
+boo2str:
+        ; (AX)->(AX)
+        ; convert a boolean to a string
+        cmp ax, 0
+        je .false
+        mov ax, true
+        ret
+.false: mov ax, false
+        ret
+
+section .data
+        dw      4 ; size
+true:	db		"true"
+        dw      5 ; size
+false:	db		"false"
+section .text
+
 """
 
     val int2decimal =
