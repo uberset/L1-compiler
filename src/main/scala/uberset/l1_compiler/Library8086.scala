@@ -11,7 +11,7 @@ import java.io.PrintWriter
 object Library8086 {
 
     def library(out: PrintWriter): Unit = {
-        //out.append(printc)
+        out.append(printc)
         out.append(prints)
         //out.append(println)
         out.append(printi)

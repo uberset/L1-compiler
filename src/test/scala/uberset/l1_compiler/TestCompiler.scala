@@ -18,7 +18,9 @@ object TestCompiler {
             test("int32768"),
             test("int65535"),
             test("int65536"),
-            test("hello")
+            test("hello"),
+            test("char"),
+            test("empty")
         )
         val tests = results.size
         val passed = results.filter(identity).size

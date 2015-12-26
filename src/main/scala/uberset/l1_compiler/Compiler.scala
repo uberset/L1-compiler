@@ -24,8 +24,9 @@ class Compiler(
 
     def program() {
         generator.begin()
-        statement()
-        if(token!=EOF()) fail(s"Unexpected token: $token at end of program")
+        while(token!=EOF()) {
+            statement()
+        }
         generator.end()
         generator.library()
     }
@@ -41,6 +42,7 @@ class Compiler(
         nextToken()
         val t = expression()
         t match {
+            case TChr() => generator.printChr()
             case TInt() => generator.printInt()
             case TStr() => generator.printStr()
             case other => fail(s"Unknown argument type $t for function print.")
@@ -53,9 +55,10 @@ class Compiler(
 
     def literal(): Type = {
         token match {
+            case ChrLiteral(v) => generator.pushChr(v); nextToken(); TChr()
             case IntLiteral(v) => generator.pushInt(v); nextToken(); TInt()
             case StrLiteral(v) => generator.pushStr(v); nextToken(); TStr()
-            case other => fail(s"Expecting integer literal. Found token: $other")
+            case other => fail(s"Expecting literal. Found token: $other")
         }
     }
 
@@ -68,3 +71,4 @@ class Compiler(
 abstract sealed class Type
 case class TInt() extends Type
 case class TStr() extends Type
+case class TChr() extends Type
