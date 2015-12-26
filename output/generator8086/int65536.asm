@@ -6,6 +6,13 @@ call printi
 mov ax,0x4c00
 int 0x21
 
+printc:	; (AL)->()
+        ; print a char to stdout
+        mov dl, al      ; load character
+        mov ah, 2		; output char to stdout (ah: 02, dl: char)
+        int 0x21		; DOS
+.end:	ret
+
 prints:	; (AX)->()
         ; print a string to stdout
         ; string start address in AX
