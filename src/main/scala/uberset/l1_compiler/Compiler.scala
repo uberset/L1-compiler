@@ -56,7 +56,7 @@ class Compiler(
 
     def literal(): Type = {
         token match {
-            case Identifier("true")  => generator.pushBoo(true ); nextToken(); TBoo()
+            case Identifier("true" ) => generator.pushBoo(true ); nextToken(); TBoo()
             case Identifier("false") => generator.pushBoo(false); nextToken(); TBoo()
             case ChrLiteral(v) => generator.pushChr(v); nextToken(); TChr()
             case IntLiteral(v) => generator.pushInt(v); nextToken(); TInt()
