@@ -46,6 +46,17 @@ prints:	; (AX)->()
         loop .loop
 .end:	ret
 
+println:; ()->()
+        ; put CR LF to stdout
+
+        push ax ; save
+        mov ax, .line
+        call prints
+        pop ax  ; restore
+        ret
+.size:  dw 2
+.line:	db 0x0D, 0x0A
+
 int2decimal:
         ; (AX)->(AX)
         ; convert a signed integer (16 bit) to a buffer
