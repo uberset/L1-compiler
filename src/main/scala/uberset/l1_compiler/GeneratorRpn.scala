@@ -31,6 +31,7 @@ class GeneratorRpn(
     override def mulI(): Unit = out.print("mulI ")
     override def divI(): Unit = out.print("divI ")
     override def modI(): Unit = out.print("modI ")
-    //override def addI(): Unit = out.print("addI ")
-    //override def subI(): Unit = out.print("subI ")
+    override def addI(): Unit = out.print("addI ")
+    override def subI(): Unit = out.print("subI ")
+
 }

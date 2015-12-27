@@ -28,18 +28,11 @@ class Generator8086(
         Library8086.library(out)
     }
 
-    override def printLn() {
-        out.println("call println")
-    }
 
     override def pushBoo(v: Boolean) {
         val i = if(v) 1 else 0
         out.println( "push ax")
         out.println(s"mov ax, $i")
-    }
-
-    override def printBoo() {
-        out.println("call printb")
     }
 
     override def pushChr(v: Char) {
@@ -48,18 +41,10 @@ class Generator8086(
         out.println(s"mov ax, $s")
     }
 
-    override def printChr() {
-        out.println("call printc")
-    }
-
     override def pushInt(v: String) {
         val i = v.toInt // shall be in 0..65535
         out.println( "push ax")
         out.println(s"mov ax, $i")
-    }
-
-    override def printInt() {
-        out.println("call printi")
     }
 
     override def pushStr(str: String) {
@@ -73,6 +58,28 @@ class Generator8086(
         out.println(   "push ax")
         out.println(  s"mov ax, $lbl")
     }
+
+
+    override def printBoo() {
+        out.println("call printb")
+    }
+
+    override def printChr() {
+        out.println("call printc")
+    }
+
+    override def printInt() {
+        out.println("call printi")
+    }
+
+    override def printStr() {
+        out.println("call prints")
+    }
+
+    override def printLn() {
+        out.println("call println")
+    }
+
 
     override def negI(): Unit = {
         // ( a -> - a )
@@ -102,7 +109,7 @@ class Generator8086(
         out.println("idiv bx")
         out.println("mov ax, dx")
     }
-/*
+
     override def addI(): Unit = {
         // ( a b -> a + b )
         out.println("mov bx, ax")
@@ -115,11 +122,6 @@ class Generator8086(
         out.println("mov bx, ax")
         out.println("pop ax")
         out.println("sub ax, bx")
-    }
-*/
-
-    override def printStr() {
-        out.println("call prints")
     }
 
 }

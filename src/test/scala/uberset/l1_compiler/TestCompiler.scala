@@ -23,7 +23,8 @@ object TestCompiler {
             test("empty"),
             test("boolean"),
             test("negInt"),
-            test("mulOpsInt")
+            test("mulOpsInt"),
+            test("addOpsInt")
         )
         val tests = results.size
         val passed = results.filter(identity).size

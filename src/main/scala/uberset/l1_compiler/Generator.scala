@@ -30,7 +30,7 @@ trait Generator {
     def mulI(): Unit
     def divI(): Unit
     def modI(): Unit
-    //def addI(): Unit
-    //def subI(): Unit
+    def addI(): Unit
+    def subI(): Unit
 
 }

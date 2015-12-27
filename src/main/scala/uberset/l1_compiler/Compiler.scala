@@ -52,7 +52,26 @@ class Compiler(
     }
 
     def expression(): Type = {
-        term()
+        simpleExpression()
+    }
+
+    // simpleExpression = term { addop term }* ;
+    def simpleExpression(): Type = {
+        val t = term()
+        while(token.isInstanceOf[AddOp]) {
+            val op = token.asInstanceOf[AddOp]
+            nextToken()
+            val t2 = term()
+            if(t==TInt() && t2== TInt()) {
+                op match {
+                    case AddOp('+') => generator.addI()
+                    case AddOp('-') => generator.subI()
+                }
+            } else {
+                fail(s"Operator ${op.c} is not defined for types $t and $t2.")
+            }
+        }
+        t
     }
 
     // term = factor { mulop factor }* ;

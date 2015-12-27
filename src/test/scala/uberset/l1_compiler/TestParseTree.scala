@@ -53,6 +53,17 @@ object TestParseTree {
                 PrintStr(StrLit("5%-2=")), PrintInt(ModI(IntLit(5), NegI(IntLit(2)))), PrintLn(),
                 PrintStr(StrLit("-5%-2=")), PrintInt(ModI(NegI(IntLit(5)), NegI(IntLit(2)))), PrintLn(),
                 PrintStr(StrLit("-5%2=")), PrintInt(ModI(NegI(IntLit(5)), IntLit(2))), PrintLn()
+            ))),
+            test("addOpsInt", Program(Seq(
+                PrintStr(StrLit("2+3=")), PrintInt(AddI(IntLit(2), IntLit(3))), PrintLn(),
+                PrintStr(StrLit("2+-3=")), PrintInt(AddI(IntLit(2), NegI(IntLit(3)))), PrintLn(),
+                PrintStr(StrLit("2+3*4=")), PrintInt(AddI(IntLit(2), MulI(IntLit(3), IntLit(4)))), PrintLn(),
+                PrintStr(StrLit("2*3+4=")), PrintInt(AddI(MulI(IntLit(2), IntLit(3)), IntLit(4))), PrintLn(),
+                PrintLn(),
+                PrintStr(StrLit("2-3=")), PrintInt(SubI(IntLit(2), IntLit(3))), PrintLn(),
+                PrintStr(StrLit("2--3=")), PrintInt(SubI(IntLit(2), NegI(IntLit(3)))), PrintLn(),
+                PrintStr(StrLit("2-3*4=")), PrintInt(SubI(IntLit(2), MulI(IntLit(3), IntLit(4)))), PrintLn(),
+                PrintStr(StrLit("2*3-4=")), PrintInt(SubI(MulI(IntLit(2), IntLit(3)), IntLit(4))), PrintLn()
             )))
         )
         val tests = results.size
@@ -113,6 +124,8 @@ object TestParseTree {
             case MulI(x, y) => toRpn(x) + toRpn(y) + "mulI "
             case DivI(x, y) => toRpn(x) + toRpn(y) + "divI "
             case ModI(x, y) => toRpn(x) + toRpn(y) + "modI "
+            case AddI(x, y) => toRpn(x) + toRpn(y) + "addI "
+            case SubI(x, y) => toRpn(x) + toRpn(y) + "subI "
         }
     }
 
@@ -133,6 +146,8 @@ case class NegI(v: IntExpression) extends IntExpression
 case class MulI(v: IntExpression, w: IntExpression) extends IntExpression
 case class DivI(v: IntExpression, w: IntExpression) extends IntExpression
 case class ModI(v: IntExpression, w: IntExpression) extends IntExpression
+case class AddI(v: IntExpression, w: IntExpression) extends IntExpression
+case class SubI(v: IntExpression, w: IntExpression) extends IntExpression
 
 case class StrLit(v: String)
 
