@@ -15,7 +15,8 @@ case class IntLiteral(v: String) extends Token
 case class Identifier(v: String) extends Token
 case class StrLiteral(v: String) extends Token
 case class ChrLiteral(c: Char) extends Token
-case class Operator(c: Char) extends Token
+case class AddOp(c: Char) extends Token
+case class MulOp(c: Char) extends Token
 
 class Lexer(
     val in: BufferedReader
@@ -34,8 +35,10 @@ class Lexer(
     def getToken(): Token = {
         while(char.isWhitespace) nextChar()
         if(char==0) EOF()
-        else if("+-*".contains(char)) {
-            val t = Operator(char); nextChar(); t
+        else if("+-".contains(char)) {
+            val t = AddOp(char); nextChar(); t
+        } else if("*/%".contains(char)) {
+            val t = MulOp(char); nextChar(); t
         } else if(char=='\'') {
             nextChar()
             val t = ChrLiteral(char); nextChar(); t

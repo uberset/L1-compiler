@@ -37,6 +37,22 @@ object TestParseTree {
                 PrintStr(StrLit("-1=")), PrintInt(NegI(IntLit(1))), PrintLn(),
                 PrintStr(StrLit("--2=")), PrintInt(NegI(NegI(IntLit(2)))), PrintLn(),
                 PrintStr(StrLit("---3=")), PrintInt(NegI(NegI(NegI(IntLit(3))))), PrintLn()
+            ))),
+            test("mulOpsInt", Program(Seq(
+                PrintStr(StrLit("2*3=")), PrintInt(MulI(IntLit(2), IntLit(3))), PrintLn(),
+                PrintStr(StrLit("2*-3=")), PrintInt(MulI(IntLit(2), NegI(IntLit(3)))), PrintLn(),
+                PrintStr(StrLit("-2*-3=")), PrintInt(MulI(NegI(IntLit(2)), NegI(IntLit(3)))), PrintLn(),
+                PrintStr(StrLit("-2*3=")), PrintInt(MulI(NegI(IntLit(2)), IntLit(3))), PrintLn(),
+                PrintLn(),
+                PrintStr(StrLit("5/2=")), PrintInt(DivI(IntLit(5), IntLit(2))), PrintLn(),
+                PrintStr(StrLit("5/-2=")), PrintInt(DivI(IntLit(5), NegI(IntLit(2)))), PrintLn(),
+                PrintStr(StrLit("-5/-2=")), PrintInt(DivI(NegI(IntLit(5)), NegI(IntLit(2)))), PrintLn(),
+                PrintStr(StrLit("-5/2=")), PrintInt(DivI(NegI(IntLit(5)), IntLit(2))), PrintLn(),
+                PrintLn(),
+                PrintStr(StrLit("5%2=")), PrintInt(ModI(IntLit(5), IntLit(2))), PrintLn(),
+                PrintStr(StrLit("5%-2=")), PrintInt(ModI(IntLit(5), NegI(IntLit(2)))), PrintLn(),
+                PrintStr(StrLit("-5%-2=")), PrintInt(ModI(NegI(IntLit(5)), NegI(IntLit(2)))), PrintLn(),
+                PrintStr(StrLit("-5%2=")), PrintInt(ModI(NegI(IntLit(5)), IntLit(2))), PrintLn()
             )))
         )
         val tests = results.size
@@ -94,6 +110,9 @@ object TestParseTree {
             case ChrLit(v) => s"Chr(${v.toInt}) "
             case BooLit(v) => s"Boo($v) "
             case NegI(x) => toRpn(x) + "negI "
+            case MulI(x, y) => toRpn(x) + toRpn(y) + "mulI "
+            case DivI(x, y) => toRpn(x) + toRpn(y) + "divI "
+            case ModI(x, y) => toRpn(x) + toRpn(y) + "modI "
         }
     }
 
@@ -111,6 +130,9 @@ case class PrintLn() extends Stm
 abstract class IntExpression
 case class IntLit(v: Int) extends IntExpression
 case class NegI(v: IntExpression) extends IntExpression
+case class MulI(v: IntExpression, w: IntExpression) extends IntExpression
+case class DivI(v: IntExpression, w: IntExpression) extends IntExpression
+case class ModI(v: IntExpression, w: IntExpression) extends IntExpression
 
 case class StrLit(v: String)
 

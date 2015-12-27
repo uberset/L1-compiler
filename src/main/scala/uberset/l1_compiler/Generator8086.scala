@@ -79,6 +79,45 @@ class Generator8086(
         out.println("neg ax")
     }
 
+    override def mulI(): Unit = {
+        // ( a b -> a * b )
+        out.println("mov bx, ax")
+        out.println("pop ax")
+        out.println("imul ax, bx")
+    }
+
+    override def divI(): Unit = {
+        // ( a b -> a / b )
+        out.println("mov bx, ax")
+        out.println("pop ax")
+        out.println("cwd")
+        out.println("idiv bx")
+    }
+
+    override def modI(): Unit = {
+        // ( a b -> a % b )
+        out.println("mov bx, ax")
+        out.println("pop ax")
+        out.println("cwd")
+        out.println("idiv bx")
+        out.println("mov ax, dx")
+    }
+/*
+    override def addI(): Unit = {
+        // ( a b -> a + b )
+        out.println("mov bx, ax")
+        out.println("pop ax")
+        out.println("add ax, bx")
+    }
+
+    override def subI(): Unit = {
+        // ( a b -> a - b )
+        out.println("mov bx, ax")
+        out.println("pop ax")
+        out.println("sub ax, bx")
+    }
+*/
+
     override def printStr() {
         out.println("call prints")
     }

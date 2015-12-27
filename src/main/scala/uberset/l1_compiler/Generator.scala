@@ -27,5 +27,10 @@ trait Generator {
     def printStr(): Unit
 
     def negI(): Unit
+    def mulI(): Unit
+    def divI(): Unit
+    def modI(): Unit
+    //def addI(): Unit
+    //def subI(): Unit
 
 }
